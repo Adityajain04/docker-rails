@@ -1,2 +1,8 @@
 <h1>Home Page</h1>
+<% if current_user.has_role? :admin %>
+  <%= link_to 'Normal Users List', admin_normal_users_path  %>
+  <br />
+  <%= link_to 'Admin Users List', admin_admin_users_path %>
+  <br />
+<% end %>
 <%= link_to 'Logout', destroy_user_session_path ,method: :delete %>
