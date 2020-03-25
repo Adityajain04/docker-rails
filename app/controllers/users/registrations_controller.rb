@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
+    resource.add_role :normal if resource.present?
   end
 
   # GET /resource/edit
