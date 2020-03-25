@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users,  :controllers => { :registrations => "users/registrations", :sessions => "users/sessions" }
+  root 'home#index'
+
+  namespace :admin do
+    get '/normal_users', to: 'users#normal_users'
+    get '/admin_users', to: 'users#admin_users'
+  end
 end
