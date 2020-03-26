@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Username</th>
       <th>Email</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,9 @@
         <td><%= user.full_name %></td>
         <td><%= user.username %></td>
         <td><%= user.email %></td>
+        <td>
+          <%= link_to 'Add Roles', edit_admin_user_path(user.id) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
