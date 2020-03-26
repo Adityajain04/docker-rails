@@ -1,0 +1,22 @@
+<h2>Roles List</h2>
+<%= link_to 'Home', root_path %>
+<%= link_to 'Add Role', new_admin_role_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr>
+        <td><%= role.name %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_role_path(role.id)%>
+          <%= link_to 'Delete', admin_role_path(role.id), method: :delete, data: {confirm: 'Are you sure?'}%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
