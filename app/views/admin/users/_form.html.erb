@@ -1,0 +1,8 @@
+<%= form_with model: [:admin, @user] do |f| %>
+  <% @roles.each_with_index do |role, i| %>
+    <%= check_box_tag "roles[name][#{i}]", role.name, @user.has_role?(role.name) %>
+    <label><%= role.name %></label>
+  <% end %>
+  <br />
+  <%= f.submit 'Submit' %>
+<% end %>
