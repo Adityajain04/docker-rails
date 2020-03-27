@@ -6,6 +6,6 @@ Rails.application.routes.draw do
     get '/normal_users', to: 'users#normal_users'
     get '/admin_users', to: 'users#admin_users'
     resources :users, only: [:edit, :update]
-    resources :roles, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :roles, :products, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 end
