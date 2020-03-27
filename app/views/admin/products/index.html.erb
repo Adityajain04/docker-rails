@@ -1,0 +1,26 @@
+<h2>Products List</h2>
+<%= link_to 'Home', root_path %>
+<%= link_to 'Add product', new_admin_product_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Created By</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= product.user.email %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_product_path(product.id)%>
+          <%= link_to 'Delete', admin_product_path(product.id), method: :delete, data: {confirm: 'Are you sure?'}%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

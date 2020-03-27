@@ -1,0 +1,13 @@
+<%= form_with model: [:admin, @product] do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<br />
+	<%= f.label :price %>
+	<%= f.text_field :price %>
+	<br />
+	<%= f.label :description %>
+	<%= f.text_area :description, maxlength: "1500"%>
+	<br />
+	<%#= f.hidden_field :user_id, value: current_user.id %>
+	<%= f.submit 'Submit' %>
+<% end %>
