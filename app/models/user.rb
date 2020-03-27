@@ -5,6 +5,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :products, dependent: :destroy
+
+  validates_presence_of :email
+  validates_uniqueness_of :email
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+
   scope :normal, -> { includes(:roles).references('roles').where('roles.name = ?', 'normal') }
   scope :admin, -> { includes(:roles).references('roles').where('roles.name = ?', 'admin') }
 
