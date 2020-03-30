@@ -3,11 +3,11 @@
     <%= link_to '&larr; Home'.html_safe, root_path, class: 'btn btn default' %>
   </div>
   <div class="col text-right">
-    <%= link_to 'Add Category', new_admin_category_path, class: 'btn btn-success' %>
+    <%= link_to 'Add Brand', new_admin_brand_path, class: 'btn btn-success' %>
   </div>
 </div>
   <center>
-    <h2>Products Category List</h2>
+    <h2>Products Brand List</h2>
   </center>
 <div class="table-responsive">
   <table class="table table-dark table-striped table-bordered">
@@ -16,18 +16,20 @@
         <th scope="col">Name</th>
         <th scope="col">Code</th>
         <th scope="col">Created By</th>
+        <th scope="col">Status</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
-      <% @categories.each do |category| %>
+      <% @brands.each do |brand| %>
         <tr>
-          <td><%= category.name %></td>
-          <td><%= category.code %></td>
-          <td><%= category.user.full_name %></td>
+          <td><%= brand.name %></td>
+          <td><%= brand.code %></td>
+          <td><%= brand.user.full_name %></td>
+          <td><%= brand.status %></td>
           <td>
-            <%= link_to 'Edit', edit_admin_category_path(category.id), class: 'btn btn-info' %>
-            <%= link_to 'Delete', admin_category_path(category.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'%>
+            <%= link_to 'Edit', edit_admin_brand_path(brand.id), class: 'btn btn-info' %>
+            <%= link_to 'Delete', admin_brand_path(brand.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'%>
           </td>
         </tr>
       <% end %>
