@@ -10,13 +10,14 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def edit
-    @roles = Role.all
+    @roles = Role.where('name not in (?)', @user.roles.map(&:name))
   end
 
   def update
-    params[:roles][:name].each do |i, role|
-      @user.add_role(role) unless @user.has_role?(role)
-    end
+    @user.add_role(role) unless @user.has_role?(role)
+    # params[:roles][:name].each do |i, role|
+    #   @user.add_role(role) unless @user.has_role?(role)
+    # end
     flash[:notice] = 'Roles added to user.'
     redirect_to root_path
   end
