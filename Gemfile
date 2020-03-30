@@ -55,4 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # authentication
 gem 'devise', '~> 4.7', '>= 4.7.1'
 # authorization
+gem 'cancancan', '~> 3.1'
 gem 'rolify', '~> 5.2'
