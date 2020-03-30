@@ -3,6 +3,8 @@ class CreateCategories < ActiveRecord::Migration[6.0]
     create_table :categories do |t|
       t.string :name, null: false
       t.string :code
+      t.text :description
+      t.references :user, null: false
 
       t.timestamps
     end
