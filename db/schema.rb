@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_130601) do
+ActiveRecord::Schema.define(version: 2020_03_31_130905) do
+
+  create_table "attribute_values", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code"
+    t.boolean "status", default: false, null: false
+    t.text "description"
+    t.bigint "user_id", null: false
+    t.bigint "attribute_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["attribute_id"], name: "index_attribute_values_on_attribute_id"
+    t.index ["user_id"], name: "index_attribute_values_on_user_id"
+  end
 
   create_table "attributes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -112,6 +125,8 @@ ActiveRecord::Schema.define(version: 2020_03_31_130601) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "attribute_values", "attributes"
+  add_foreign_key "attribute_values", "users"
   add_foreign_key "attributes", "users"
   add_foreign_key "brands", "users"
   add_foreign_key "stores", "users"
