@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_143639) do
+ActiveRecord::Schema.define(version: 2020_03_31_122733) do
 
   create_table "brands", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 2020_03_30_143639) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code"
+    t.text "descriptoiin"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_stores_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name", default: "", null: false
     t.string "middle_name", default: ""
@@ -91,4 +101,5 @@ ActiveRecord::Schema.define(version: 2020_03_30_143639) do
   end
 
   add_foreign_key "brands", "users"
+  add_foreign_key "stores", "users"
 end
