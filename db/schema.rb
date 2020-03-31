@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_152655) do
+ActiveRecord::Schema.define(version: 2020_03_31_153950) do
 
   create_table "attribute_values", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_152655) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["attribute_id"], name: "index_attribute_values_on_attribute_id"
     t.index ["user_id"], name: "index_attribute_values_on_user_id"
+  end
+
+  create_table "attribute_values_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "attribute_value_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["attribute_value_id"], name: "index_attribute_values_products_on_attribute_value_id"
+    t.index ["product_id"], name: "index_attribute_values_products_on_product_id"
   end
 
   create_table "attributes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -47,6 +56,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_152655) do
     t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
+  create_table "brands_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "brand_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["brand_id"], name: "index_brands_products_on_brand_id"
+    t.index ["product_id"], name: "index_brands_products_on_product_id"
+  end
+
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "code"
@@ -56,6 +74,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_152655) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "status", default: false, null: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "categories_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_categories_products_on_category_id"
+    t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -68,6 +95,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_152655) do
     t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "products_stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "store_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_products_stores_on_product_id"
+    t.index ["store_id"], name: "index_products_stores_on_store_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -128,7 +164,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_152655) do
 
   add_foreign_key "attribute_values", "attributes"
   add_foreign_key "attribute_values", "users"
+  add_foreign_key "attribute_values_products", "attribute_values"
+  add_foreign_key "attribute_values_products", "products"
   add_foreign_key "attributes", "users"
   add_foreign_key "brands", "users"
+  add_foreign_key "brands_products", "brands"
+  add_foreign_key "brands_products", "products"
+  add_foreign_key "categories_products", "categories"
+  add_foreign_key "categories_products", "products"
+  add_foreign_key "products_stores", "products"
+  add_foreign_key "products_stores", "stores"
   add_foreign_key "stores", "users"
 end
