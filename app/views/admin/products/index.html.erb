@@ -3,7 +3,9 @@
     <%= link_to '&larr; Home'.html_safe, root_path, class: 'btn btn default' %>
   </div>
   <div class="col text-right">
-    <%= link_to 'Add product', new_admin_product_path, class: 'btn btn-success' %>
+    <%= link_to new_admin_product_path, class: 'btn btn-success' do %>
+      <i class="fas fa-plus-square"></i>
+    <% end %>
   </div>
 </div>
   <center>
@@ -26,8 +28,12 @@
           <td>$ <%= product.price %></td>
           <td><%= product.user.email %></td>
           <td>
-            <%= link_to 'Edit', edit_admin_product_path(product.id), class: 'btn btn-info' %>
-            <%= link_to 'Delete', admin_product_path(product.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'%>
+            <%= link_to  edit_admin_product_path(product.id), class: 'btn btn-info' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to admin_product_path(product.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
           </td>
         </tr>
       <% end %>

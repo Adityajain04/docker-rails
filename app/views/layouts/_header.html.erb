@@ -6,48 +6,71 @@
     <!-- <p>Dummy Heading</p> -->
     <% if user_signed_in? %>
       <li class=<%= active_nav([['home', 'index']]) %>>
-        <%= link_to 'Home', root_path %>
+        <%= link_to root_path do %>
+          <i class="fa fa-home" aria-hidden="true"></i>  <span>Home</span>
+        <% end %>
       </li>
       <% if current_user.has_role? :admin %>
         <li class=<%= active_nav([['users', 'admin_users'], ['users', 'normal_users']]) %>>
-          <%= link_to 'Users', '#homeSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" %>
+          <%= link_to '#homeSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" do %>
+            <i class="fa fa-users" aria-hidden="true"></i>  <span>Users</span>
+          <% end %>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                  <%= link_to 'Normal Users List', admin_normal_users_path  %>
+                  <%= link_to admin_normal_users_path do %>
+                    <i class="fas fa-user-clock"></i>  <span>Normal Users List</span>
+                  <% end %>
                 </li>
                 <li>
-                  <%= link_to 'Admin Users List', admin_admin_users_path %>
+                  <%= link_to admin_admin_users_path do %>
+                    <i class="fas fa-user-tie"></i>  <span>Admin Users List</span>
+                  <% end %>
                 </li>
             </ul>
         </li>
         <li class=<%= active_nav([['roles', 'index']]) %>>
-          <%= link_to 'Roles', admin_roles_path %>
+          <%= link_to  admin_roles_path do %>
+            <i class="fas fa-chalkboard-teacher"></i>  <span>Roles</span>
+          <% end %>
         </li>
         <li class=<%= active_nav([['categories', 'index'], ['brands', 'index'], ['products', 'index']]) %>>
-            <%= link_to 'Products', '#pageSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" %>
-            
+            <%= link_to '#pageSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" do %>
+              <i class="fab fa-product-hunt"></i>  <span>Products</span>
+            <% end %>
             <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
-                  <%= link_to 'Product Categories',  admin_categories_path %>
+                  <%= link_to admin_categories_path do %>
+                    <i class="far fa-copy"></i>  <span>Product Categories</span>
+                  <% end %>
                 </li>
                 <li>
-                  <%= link_to 'Product Brands',  admin_brands_path %>
+                  <%= link_to admin_brands_path do %>
+                    <i class="fas fa-bookmark"></i>  <span>Product Brands</span>
+                  <% end %>
                 </li>
                 <li>
-                  <%= link_to 'Products',  admin_products_path %>
+                  <%= link_to admin_products_path do %>
+                    <i class="fas fa-align-left"></i>  <span>Products</span>
+                  <% end %>
                 </li>
             </ul>
         </li>
       <% end %>
       <li class=<%= active_nav([['sessions', 'destroy']]) %>>
-        <%= link_to 'Logout', destroy_user_session_path ,method: :delete %>
+        <%= link_to destroy_user_session_path ,method: :delete do %>
+          <i class="fas fa-sign-out-alt"></i>  <span>Logout</span>
+        <% end %>
       </li>
     <% else %>
       <li class=<%= active_nav([['sessions', 'new']]) %>>
-        <%= link_to 'Sign In', new_user_session_path %>
+        <%= link_to  new_user_session_path do %>
+          <i class="fas fa-sign-in-alt"></i>  <span>Sign In</span>
+        <% end %>
       </li>
       <li class=<%= active_nav([['registrations', 'new']]) %>>
-        <%= link_to 'Sign Up', new_user_registration_path %>
+        <%= link_to  new_user_registration_path do %>
+          <i class="fas fa-user-plus"></i>  <span>Sign Up</span>
+        <% end %>
       </li>
     <% end %>
 </ul>
