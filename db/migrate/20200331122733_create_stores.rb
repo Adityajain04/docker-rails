@@ -3,7 +3,8 @@ class CreateStores < ActiveRecord::Migration[6.0]
     create_table :stores do |t|
       t.string :name, null: false
       t.string :code
-      t.text :descriptoiin
+      t.text :description
+      t.boolean :status, null: false, default: false
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

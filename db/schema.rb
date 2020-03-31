@@ -59,7 +59,8 @@ ActiveRecord::Schema.define(version: 2020_03_31_122733) do
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "code"
-    t.text "descriptoiin"
+    t.text "description"
+    t.boolean "status", default: false, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

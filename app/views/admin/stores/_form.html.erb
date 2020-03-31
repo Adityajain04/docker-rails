@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>
+      Add Store
+    </h2>
+    <%= form_with model: [:admin, @store] do |f| %>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>  
+      </div>
+      <div class="form-group">
+        <%= f.label :code %>
+        <%= f.text_field :code, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, maxlength: "1500", class: 'form-control'%>
+      </div>
+      
+      <div class="form-group">
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', root_path, class: 'btn btn-secondary'%>
+      </div>
+    <% end %>
+  </div>
+</div>
