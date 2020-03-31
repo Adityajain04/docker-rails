@@ -21,7 +21,7 @@ Things you may want to cover:
   3. [Install node](https://nodejs.org/en/)
   4. ``` 
      Install using yarn
-     yarn add bootstrap@4.3.1 jquery popper.js toastr
+     yarn add bootstrap@4.3.1 jquery popper.js toastr @fortawesome/fontawesome-free
      ```
 * Configuration
 
