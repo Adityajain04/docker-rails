@@ -1,2 +1,5 @@
 @import '~bootstrap/scss/bootstrap';
 @import "toastr";
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/v4-shims';

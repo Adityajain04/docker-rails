@@ -1,0 +1,53 @@
+ <div class="sidebar-header">
+    <h3>Inventory Management</h3>
+</div>
+
+<ul class="list-unstyled components">
+    <!-- <p>Dummy Heading</p> -->
+    <% if user_signed_in? %>
+      <li class=<%= active_nav([['home', 'index']]) %>>
+        <%= link_to 'Home', root_path %>
+      </li>
+      <% if current_user.has_role? :admin %>
+        <li class=<%= active_nav([['users', 'admin_users'], ['users', 'normal_users']]) %>>
+          <%= link_to 'Users', '#homeSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" %>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li>
+                  <%= link_to 'Normal Users List', admin_normal_users_path  %>
+                </li>
+                <li>
+                  <%= link_to 'Admin Users List', admin_admin_users_path %>
+                </li>
+            </ul>
+        </li>
+        <li class=<%= active_nav([['roles', 'index']]) %>>
+          <%= link_to 'Roles', admin_roles_path %>
+        </li>
+        <li class=<%= active_nav([['categories', 'index'], ['brands', 'index'], ['products', 'index']]) %>>
+            <%= link_to 'Products', '#pageSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" %>
+            
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                  <%= link_to 'Product Categories',  admin_categories_path %>
+                </li>
+                <li>
+                  <%= link_to 'Product Brands',  admin_brands_path %>
+                </li>
+                <li>
+                  <%= link_to 'Products',  admin_products_path %>
+                </li>
+            </ul>
+        </li>
+      <% end %>
+      <li class=<%= active_nav([['sessions', 'destroy']]) %>>
+        <%= link_to 'Logout', destroy_user_session_path ,method: :delete %>
+      </li>
+    <% else %>
+      <li class=<%= active_nav([['sessions', 'new']]) %>>
+        <%= link_to 'Sign In', new_user_session_path %>
+      </li>
+      <li class=<%= active_nav([['registrations', 'new']]) %>>
+        <%= link_to 'Sign Up', new_user_registration_path %>
+      </li>
+    <% end %>
+</ul>

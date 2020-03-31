@@ -10,9 +10,38 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <%= yield %>
-      <%= toastr_flash %>
+    <div class="wrapper">
+
+      <!-- Sidebar -->
+      <nav id="sidebar">
+        <%= render partial: 'layouts/header'%>
+      </nav>
+
+      <!-- Page Content -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <!-- <span>Toggle Sidebar</span> -->
+                </button>
+            </div>
+        </nav>
+        <div class="container-fluid">
+          <%= yield %>
+          <%= toastr_flash %>
+        </div>
+      </div>
     </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+
+          $('#sidebarCollapse').on('click', function () {
+              $('#sidebar').toggleClass('active');
+          });
+
+      });
+  </script>
   </body>
 </html>

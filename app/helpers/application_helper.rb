@@ -7,4 +7,14 @@ module ApplicationHelper
       flash_messages << text.html_safe if message
     end.join("\n").html_safe
   end
+
+  def active_nav(arr)
+    nav_class = ''
+    arr.each do |child_arr|
+      if child_arr[0] == controller.controller_name and child_arr[1] == controller.action_name
+        nav_class = 'active'
+      end
+    end
+    nav_class
+  end
 end
