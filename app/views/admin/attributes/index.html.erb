@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col text-left">
+    <%= link_to '&larr; Home'.html_safe, root_path, class: 'btn btn default' %>
+  </div>
+  <div class="col text-right">
+    <%= link_to new_admin_attribute_path, class: 'btn btn-success' do %>
+      <i class="fas fa-plus-square"></i>
+    <% end %>
+  </div>
+</div>
+  <center>
+    <h2>Products Attribute List</h2>
+  </center>
+<div class="table-responsive">
+  <table class="table table-dark table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Created By</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @attributes.each do |attribute| %>
+        <tr>
+          <td><%= attribute.name %></td>
+          <td><%= attribute.code %></td>
+          <td><%= attribute.user.full_name %></td>
+          <td><%= attribute.status %></td>
+          <td>
+            <%= link_to admin_attribute_attribute_values_path(attribute.id), class: 'btn btn-warning' do %>
+              <i class="fas fa-list"></i>  <span>Values</span>
+            <% end %>
+            <%= link_to  edit_admin_attribute_path(attribute.id), class: 'btn btn-info' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to admin_attribute_path(attribute.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
