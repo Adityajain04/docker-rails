@@ -1,4 +1,7 @@
 class AttributeValue < ApplicationRecord
   belongs_to :user
-  belongs_to :attri, class_name: 'Attribute', :foreign_key => "attribute_id"
+  belongs_to :attry, class_name: 'Attribute', :foreign_key => "attribute_id"
+
+  has_many :attribute_values_products
+  has_many :products, through: :attribute_values_products
 end
