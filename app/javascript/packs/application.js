@@ -8,6 +8,8 @@ window.jQuery = $;
 window.$ = $;
 import 'bootstrap';
 import "@fortawesome/fontawesome-free/js/all";
+import 'select2';                       // globally assign select2 fn to $ element
+import 'select2/dist/css/select2.css';  // optional if you have css loader
 import './stylesheets/application.scss';
 
 require("@rails/ujs").start()
@@ -16,7 +18,6 @@ require("@rails/activestorage").start()
 require("channels")
 
 global.toastr = require("toastr")
-
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

@@ -13,6 +13,7 @@
     "jquery-mousewheel": "^3.1.13",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "popper.js": "^1.16.1",
+    "select2": "^4.0.13",
     "toastr": "^2.1.4",
     "turbolinks": "^5.2.0"
   },
