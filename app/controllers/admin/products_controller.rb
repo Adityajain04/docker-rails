@@ -18,7 +18,8 @@ class Admin::ProductsController < Admin::AdminController
       join_ids = {
         'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
         'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id],
-        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id]
+        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id],
+        'AttributeValuesProduct': params[:attribute_value_id].blank? ? [] : params[:attribute_value_id]
       }
       fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product created successfully.'
@@ -37,7 +38,8 @@ class Admin::ProductsController < Admin::AdminController
       join_ids = {
         'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
         'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id],
-        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id]
+        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id],
+        'AttributeValuesProduct': params[:attribute_value_id].blank? ? [] : params[:attribute_value_id]
       }
       fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product updated successfully.'
@@ -75,10 +77,10 @@ class Admin::ProductsController < Admin::AdminController
   def fill_join_association(join_ids, product)
     join_ids.each do |model, ids|
       ids.each do |i, id|
-        if model.to_s.underscore.split('_')[0].singularize == 'product'
+        if model.to_s.underscore.split('_product')[0].include?('product')
           name = model.to_s.underscore.split('_')[1].singularize
         else
-          name = model.to_s.underscore.split('_')[0].singularize
+          name = model.to_s.underscore.split('_product')[0].singularize
         end
         model.to_s.constantize.find_or_initialize_by(
           product_id: product.id, "#{name}_id": id).save

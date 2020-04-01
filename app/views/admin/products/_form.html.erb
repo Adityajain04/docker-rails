@@ -45,7 +45,6 @@
             <%= check_box_tag "category_id[#{i}]", category.id, @product.categories.include?(category) %>
             <%= c.label "#{category.name}" %>
           <% end %>
-          <%#= select_tag :brand_id, options_from_collection_for_select(Brand.all, "id", "name"), class: 'form-control select2-enable', multiple: true %>
         </div>
       <% end %>
       <%= fields_for :store do |s| %>
@@ -56,7 +55,19 @@
             <%= check_box_tag "store_id[#{i}]", store.id, @product.stores.include?(store) %>
             <%= s.label "#{store.name}" %>
           <% end %>
-          <%#= select_tag :brand_id, options_from_collection_for_select(Brand.all, "id", "name"), class: 'form-control select2-enable', multiple: true %>
+        </div>
+      <% end %>
+      <%= fields_for :attribute_values do |a| %>
+        <div class="form-group">
+          <% Attribute.all.each do |attribute| %>
+            <%= a.label "#{attribute.name}" %>
+            <br />
+            <% attribute.attribute_values.each_with_index do |at_v, i| %>
+              <%= check_box_tag "attribute_value_id[#{i}]", at_v.id, @product.attribute_values.include?(at_v) %>
+              <%= a.label "#{at_v.name}" %>
+            <% end %>
+            <br />
+          <% end %>
         </div>
       <% end %>
       <div class="form-group">
