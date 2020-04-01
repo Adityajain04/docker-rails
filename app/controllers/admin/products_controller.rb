@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::ProductsController
 class Admin::ProductsController < Admin::AdminController
-  before_action :set_product, only: [:edit, :update, :destroy]
+  before_action :set_product, only: %i[edit update destroy]
 
   def index
     @products = Product.all
@@ -35,11 +38,10 @@ class Admin::ProductsController < Admin::AdminController
   def destroy
     if @product.destroy
       flash[:notice] = 'Product removed successfully.'
-      redirect_to admin_products_path
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_products_path
     end
+    redirect_to admin_products_path
   end
 
   private
@@ -50,9 +52,9 @@ class Admin::ProductsController < Admin::AdminController
 
   def set_product
     @product = Product.find_by(id: params[:id])
-    unless @product.present?
-      flash[:alert] = "Product not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @product.present?
+
+    flash[:alert] = 'Product not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

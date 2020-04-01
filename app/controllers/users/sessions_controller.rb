@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Devise SessionsController
 class Users::SessionsController < Devise::SessionsController
   skip_authorization_check
   # before_action :configure_sign_in_params, only: [:create]

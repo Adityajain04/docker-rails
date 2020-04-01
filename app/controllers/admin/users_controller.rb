@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin UsersController
 class Admin::UsersController < Admin::AdminController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: %i[edit update]
 
   def normal_users
     @users = User.normal
@@ -23,11 +26,12 @@ class Admin::UsersController < Admin::AdminController
   end
 
   private
+
   def set_user
     @user = User.find_by(id: params[:id])
-    unless @user.present?
-      flash[:alert] = "User not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @user.present?
+
+    flash[:alert] = 'User not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

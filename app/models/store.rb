@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Store Model
 class Store < ApplicationRecord
   belongs_to :user
 

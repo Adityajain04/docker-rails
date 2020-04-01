@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Migration ProductsStores Join Table
 class CreateProductsStores < ActiveRecord::Migration[6.0]
   def change
     create_table :products_stores do |t|

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Admin::AdminController
 class Admin::AdminController < ApplicationController
   load_and_authorize_resource
   # before_action :check_admin?

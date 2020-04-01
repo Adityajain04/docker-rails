@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# Admin::AttributeValuesController
 class Admin::AttributeValuesController < Admin::AdminController
   before_action :set_attribute
-  before_action :set_attribute_value, only: [:edit, :update, :destroy]
+  before_action :set_attribute_value, only: %i[edit update destroy]
 
   def index
     @attribute_values = @attribute.attribute_values
@@ -37,32 +40,33 @@ class Admin::AttributeValuesController < Admin::AdminController
   def destroy
     if @attribute_value.destroy
       flash[:notice] = 'Attribute Value removed successfully.'
-      redirect_to admin_attribute_attribute_values_path(@attribute)
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_attribute_attribute_values_path(@attribute)
     end
+    redirect_to admin_attribute_attribute_values_path(@attribute)
   end
 
   private
 
   def attribute_value_params
-    params.require(:attribute_value).permit(:name, :code, :description, :user_id, :attribute_id)
+    params.require(:attribute_value).permit(
+      :name, :code, :description, :user_id, :attribute_id
+    )
   end
 
   def set_attribute
     @attribute = Attribute.find_by(id: params[:attribute_id])
-    unless @attribute.present?
-      flash[:alert] = "Product Attribute not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @attribute.present?
+
+    flash[:alert] = 'Product Attribute not found.'
+    redirect_back(fallback_location: root_path)
   end
 
   def set_attribute_value
     @attribute_value = AttributeValue.find_by(id: params[:id])
-    unless @attribute_value.present?
-      flash[:alert] = "AttributeValue not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @attribute_value.present?
+
+    flash[:alert] = 'AttributeValue not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Ability for cancancan
 class Ability
   include CanCan::Ability
 
@@ -38,6 +39,6 @@ class Ability
   end
 
   private
-  def normal_user
-  end
+
+  def normal_user; end
 end

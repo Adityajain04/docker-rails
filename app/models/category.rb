@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Category Model
 class Category < ApplicationRecord
   belongs_to :user
 

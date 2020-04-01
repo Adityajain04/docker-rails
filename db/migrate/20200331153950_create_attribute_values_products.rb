@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Migratioin of AttributeValuesProducts Join Table
 class CreateAttributeValuesProducts < ActiveRecord::Migration[6.0]
   def change
     create_table :attribute_values_products do |t|

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Attribute Model
 class Attribute < ApplicationRecord
   belongs_to :user
 

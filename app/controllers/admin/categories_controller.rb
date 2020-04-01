@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::CategoriesController
 class Admin::CategoriesController < Admin::AdminController
-  before_action :set_category, only: [:edit, :update, :destroy]
+  before_action :set_category, only: %i[edit update destroy]
 
   def index
     @categories = Category.all
@@ -36,11 +39,10 @@ class Admin::CategoriesController < Admin::AdminController
   def destroy
     if @category.destroy
       flash[:notice] = 'Product Category removed successfully.'
-      redirect_to admin_categories_path
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_categories_path
     end
+    redirect_to admin_categories_path
   end
 
   private
@@ -51,9 +53,9 @@ class Admin::CategoriesController < Admin::AdminController
 
   def set_category
     @category = Category.find_by(id: params[:id])
-    unless @category.present?
-      flash[:alert] = "Product Category not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @category.present?
+
+    flash[:alert] = 'Product Category not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::BrandsController
 class Admin::BrandsController < Admin::AdminController
-  before_action :set_brand, only: [:edit, :update, :destroy]
+  before_action :set_brand, only: %i[edit update destroy]
 
   def index
     @brands = Brand.all
@@ -36,11 +39,10 @@ class Admin::BrandsController < Admin::AdminController
   def destroy
     if @brand.destroy
       flash[:notice] = 'Product Brand removed successfully.'
-      redirect_to admin_brands_path
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_brands_path
     end
+    redirect_to admin_brands_path
   end
 
   private
@@ -51,9 +53,9 @@ class Admin::BrandsController < Admin::AdminController
 
   def set_brand
     @brand = Brand.find_by(id: params[:id])
-    unless @brand.present?
-      flash[:alert] = "Product Brand not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @brand.present?
+
+    flash[:alert] = 'Product Brand not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

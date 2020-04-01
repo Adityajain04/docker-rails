@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::StoresController
 class Admin::StoresController < Admin::AdminController
-  before_action :set_store, only: [:edit, :update, :destroy]
+  before_action :set_store, only: %i[edit update destroy]
 
   def index
     @stores = Store.all
@@ -36,11 +39,10 @@ class Admin::StoresController < Admin::AdminController
   def destroy
     if @store.destroy
       flash[:notice] = 'Product Store removed successfully.'
-      redirect_to admin_stores_path
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_stores_path
     end
+    redirect_to admin_stores_path
   end
 
   private
@@ -51,9 +53,9 @@ class Admin::StoresController < Admin::AdminController
 
   def set_store
     @store = Store.find_by(id: params[:id])
-    unless @store.present?
-      flash[:alert] = "Product Store not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @store.present?
+
+    flash[:alert] = 'Product Store not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

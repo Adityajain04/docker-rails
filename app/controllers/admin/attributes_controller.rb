@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::AttributesController
 class Admin::AttributesController < Admin::AdminController
-  before_action :set_attribute, only: [:edit, :update, :destroy]
+  before_action :set_attribute, only: %i[edit update destroy]
 
   def index
     @attributes = Attribute.all
@@ -36,11 +39,10 @@ class Admin::AttributesController < Admin::AdminController
   def destroy
     if @attribute.destroy
       flash[:notice] = 'Product Attribute removed successfully.'
-      redirect_to admin_attributes_path
     else
       flash[:alert] = 'Something went wrong.'
-      redirect_to admin_attributes_path
     end
+    redirect_to admin_attributes_path
   end
 
   private
@@ -51,9 +53,9 @@ class Admin::AttributesController < Admin::AdminController
 
   def set_attribute
     @attribute = Attribute.find_by(id: params[:id])
-    unless @attribute.present?
-      flash[:alert] = "Product Attribute not found."
-      redirect_back(fallback_location: root_path)
-    end
+    return if @attribute.present?
+
+    flash[:alert] = 'Product Attribute not found.'
+    redirect_back(fallback_location: root_path)
   end
 end

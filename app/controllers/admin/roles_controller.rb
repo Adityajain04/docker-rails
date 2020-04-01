@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin::RolesController
 class Admin::RolesController < Admin::AdminController
-  before_action :set_role, only: [:edit, :update,  :destroy]
+  before_action :set_role, only: %i[edit update destroy]
 
   def index
     @roles = Role.all
@@ -35,23 +38,23 @@ class Admin::RolesController < Admin::AdminController
   def destroy
     if @role.destroy
       flash[:notice] = 'Role removed.'
-      redirect_to admin_roles_path
     else
       flash[:alert] = 'Something went wrong..'
-      redirect_to admin_roles_path
     end
+    redirect_to admin_roles_path
   end
 
   private
+
   def role_params
     params.require(:role).permit(:name)
   end
 
   def set_role
     @role = Role.find_by(id: params[:id])
-    unless @role.present?
-      flash[:alert] = 'Role not found.'
-      redirect_to admin_roles_path
-    end
+    return if @role.present?
+
+    flash[:alert] = 'Role not found.'
+    redirect_to admin_roles_path
   end
 end
