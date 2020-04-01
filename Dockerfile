@@ -21,3 +21,5 @@ RUN bundle install
 
 ADD Gemfile* $APP_HOME/
 ADD . $APP_HOME
+
+RUN rubocop -a
