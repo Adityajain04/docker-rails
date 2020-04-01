@@ -10,13 +10,16 @@ class Admin::ProductsController < Admin::AdminController
 
   def new
     @product = current_user.products.new
-    @product.brands.build
   end
 
   def create
     @product = current_user.products.new(product_params)
     if @product.save
-      fill_brands_product(params[:brand_id], @product.reload)
+      join_ids = {
+        'BrandsProduct': params[:brand_id],
+        'CategoriesProduct': params[:category_id]
+      }
+      fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product created successfully.'
       redirect_to admin_products_path
     else
@@ -26,14 +29,15 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def edit
-    if @product.brands.blank?
-      @product.brands.build
-    end
   end
 
   def update
     if @product.update(product_params)
-      fill_brands_product(params[:brand_id], @product)
+      join_ids = {
+        'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
+        'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id]
+      }
+      fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product updated successfully.'
       redirect_to admin_products_path
     else
@@ -66,11 +70,17 @@ class Admin::ProductsController < Admin::AdminController
     redirect_back(fallback_location: root_path)
   end
 
-  def fill_brands_product(brands, product)
-    brands.each do |i, brand|
-      brand_product = BrandsProduct.find_or_initialize_by(
-        product_id: product.id, brand_id: brand)
-      brand_product.save
+  def fill_join_association(join_ids, product)
+    join_ids.each do |model, ids|
+      ids.each do |i, id|
+        if model.to_s.underscore.split('_')[0].singularize == 'product'
+          name = model.to_s.underscore.split('_')[1].singularize
+        else
+          name = model.to_s.underscore.split('_')[0].singularize
+        end
+        model.to_s.constantize.find_or_initialize_by(
+          product_id: product.id, "#{name}_id": id).save
+      end
     end
   end
 end
