@@ -48,6 +48,17 @@
           <%#= select_tag :brand_id, options_from_collection_for_select(Brand.all, "id", "name"), class: 'form-control select2-enable', multiple: true %>
         </div>
       <% end %>
+      <%= fields_for :store do |s| %>
+        <div class="form-group">
+          <%= s.label 'Store' %>
+          <br />
+          <% Store.all.each_with_index do |store, i| %>
+            <%= check_box_tag "store_id[#{i}]", store.id, @product.stores.include?(store) %>
+            <%= s.label "#{store.name}" %>
+          <% end %>
+          <%#= select_tag :brand_id, options_from_collection_for_select(Brand.all, "id", "name"), class: 'form-control select2-enable', multiple: true %>
+        </div>
+      <% end %>
       <div class="form-group">
         <%= f.submit 'Submit', class: 'btn btn-primary' %>
         <%= link_to 'Cancel', root_path, class: 'btn btn-secondary'%>

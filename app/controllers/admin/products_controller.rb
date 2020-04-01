@@ -16,8 +16,9 @@ class Admin::ProductsController < Admin::AdminController
     @product = current_user.products.new(product_params)
     if @product.save
       join_ids = {
-        'BrandsProduct': params[:brand_id],
-        'CategoriesProduct': params[:category_id]
+        'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
+        'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id],
+        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id]
       }
       fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product created successfully.'
@@ -35,7 +36,8 @@ class Admin::ProductsController < Admin::AdminController
     if @product.update(product_params)
       join_ids = {
         'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
-        'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id]
+        'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id],
+        'ProductsStore': params[:store_id].blank? ? [] : params[:store_id]
       }
       fill_join_association(join_ids, @product.reload)
       flash[:notice] = 'Product updated successfully.'
