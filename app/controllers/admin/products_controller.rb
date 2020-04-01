@@ -10,11 +10,13 @@ class Admin::ProductsController < Admin::AdminController
 
   def new
     @product = current_user.products.new
+    @product.brands.build
   end
 
   def create
     @product = current_user.products.new(product_params)
     if @product.save
+      fill_brands_product(params[:brand_id], @product.reload)
       flash[:notice] = 'Product created successfully.'
       redirect_to admin_products_path
     else
@@ -23,10 +25,15 @@ class Admin::ProductsController < Admin::AdminController
     end
   end
 
-  def edit; end
+  def edit
+    if @product.brands.blank?
+      @product.brands.build
+    end
+  end
 
   def update
     if @product.update(product_params)
+      fill_brands_product(params[:brand_id], @product)
       flash[:notice] = 'Product updated successfully.'
       redirect_to admin_products_path
     else
@@ -47,7 +54,8 @@ class Admin::ProductsController < Admin::AdminController
   private
 
   def product_params
-    params.require(:product).permit(:name, :price, :description, :user_id, :sku, :quantity)
+    params.require(:product).permit(
+      :name, :price, :description, :user_id, :sku, :quantity)
   end
 
   def set_product
@@ -56,5 +64,13 @@ class Admin::ProductsController < Admin::AdminController
 
     flash[:alert] = 'Product not found.'
     redirect_back(fallback_location: root_path)
+  end
+
+  def fill_brands_product(brands, product)
+    brands.each do |i, brand|
+      brand_product = BrandsProduct.find_or_initialize_by(
+        product_id: product.id, brand_id: brand)
+      brand_product.save
+    end
   end
 end

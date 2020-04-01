@@ -24,6 +24,18 @@
         <%= f.label :sku %>
         <%= f.text_field :sku, class: 'form-control' %>
       </div>
+
+      <%= f.fields_for :brands do |b| %>
+        <div class="form-group">
+          <%= b.label 'Brand' %>
+          <br />
+          <% Brand.all.each_with_index do |brand, i| %>
+            <%= check_box_tag "brand_id[#{i}]", brand.id, @product.brands.include?(brand) %>
+            <%= b.label "#{brand.name}" %>
+          <% end %>
+          <%#= select_tag :brand_id, options_from_collection_for_select(Brand.all, "id", "name"), class: 'form-control select2-enable', multiple: true %>
+        </div>
+      <% end %>
       <div class="form-group">
         <%= f.submit 'Submit', class: 'btn btn-primary' %>
         <%= link_to 'Cancel', root_path, class: 'btn btn-secondary'%>
