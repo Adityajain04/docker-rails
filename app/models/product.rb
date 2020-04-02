@@ -14,6 +14,8 @@ class Product < ApplicationRecord
   has_many :attribute_values, through: :attribute_values_products
   has_many :attries, class_name: 'Attribute', through: :attribute_values
 
+  has_many_attached :images
+
   validates_presence_of :name, :price, :user_id
   validates_uniqueness_of :name
 end

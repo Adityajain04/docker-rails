@@ -24,7 +24,17 @@
         <%= f.label :sku %>
         <%= f.text_field :sku, class: 'form-control' %>
       </div>
-
+      <div class="form-group">
+        <%= f.label :images %>
+        <%= f.file_field :images, multiple: true,  class: 'form-control', onchange: 'readURL(this)' %>
+      </div>
+      <div class="col-md-12 text-center" id='images'>
+        <% if @product.images.attached? %>
+          <% @product.images.each do |image| %>
+            <%= image_tag image, width: "200px", height: "200px", class: 'img-thumbnail'  %>
+          <% end %>
+        <% end %>
+      </div>
       <%= fields_for :brands do |b| %>
         <div class="form-group">
           <%= b.label 'Brand' %>
