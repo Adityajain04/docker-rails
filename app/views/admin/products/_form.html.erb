@@ -26,12 +26,17 @@
       </div>
       <div class="form-group">
         <%= f.label :images %>
-        <%= f.file_field :images, multiple: true,  class: 'form-control', onchange: 'readURL(this)' %>
+        <%= f.file_field :my_images, multiple: true,  class: 'form-control', onchange: 'readURL(this)' %>
       </div>
-      <div class="col-md-12 text-center" id='images'>
+      <div class="row text-center" id='images'>
         <% if @product.images.attached? %>
           <% @product.images.each do |image| %>
-            <%= image_tag image, width: "200px", height: "200px", class: 'img-thumbnail'  %>
+            <div class="col">
+              <%= link_to "/admin/products/#{@product.id}/remove_attachment/#{image.id}", method: :delete, data: {confirm: 'Are you sure?'} do %>
+                <%= image_tag 'remove', width: '15px !important', height: '15px !important', style: "position: absolute;" %>
+              <% end %>
+              <%= image_tag image, width: "200px !important", height: "200px !important", class: 'img-thumbnail'  %>
+            </div>
           <% end %>
         <% end %>
       </div>
@@ -69,11 +74,11 @@
       <% end %>
       <%= fields_for :attribute_values do |a| %>
         <div class="form-group">
-          <% Attribute.all.each do |attribute| %>
+          <% Attribute.all.each_with_index do |attribute, i| %>
             <%= a.label "#{attribute.name}" %>
             <br />
-            <% attribute.attribute_values.each_with_index do |at_v, i| %>
-              <%= check_box_tag "attribute_value_id[#{i}]", at_v.id, @product.attribute_values.include?(at_v) %>
+            <% attribute.attribute_values.each_with_index do |at_v, j| %>
+              <%= check_box_tag "attribute_value_id[#{i}_#{j}]", at_v.id, @product.attribute_values.include?(at_v) %>
               <%= a.label "#{at_v.name}" %>
             <% end %>
             <br />

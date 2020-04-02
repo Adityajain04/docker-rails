@@ -2,7 +2,7 @@
 
 # Admin::ProductsController
 class Admin::ProductsController < Admin::AdminController
-  before_action :set_product, only: %i[edit update destroy]
+  before_action :set_product, only: %i[edit update destroy remove_attachment]
 
   def index
     @products = Product.all
@@ -14,6 +14,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def create
     @product = current_user.products.new(product_params)
+    @product.images.attach(params[:product][:my_images]) if params[:product][:my_images].present?
     if @product.save
       join_ids = {
         'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
@@ -35,6 +36,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def update
     if @product.update(product_params)
+      @product.images.attach(params[:product][:my_images]) if params[:product][:my_images].present?
       join_ids = {
         'BrandsProduct': params[:brand_id].blank? ? [] : params[:brand_id],
         'CategoriesProduct': params[:category_id].blank? ? [] : params[:category_id],
@@ -59,11 +61,17 @@ class Admin::ProductsController < Admin::AdminController
     redirect_to admin_products_path
   end
 
+  def remove_attachment
+    @image = ActiveStorage::Attachment.find(params[:attachment_id])
+    @image.purge
+    redirect_to edit_admin_product_url(@product.id)
+  end
+
   private
 
   def product_params
     params.require(:product).permit(
-      :name, :price, :description, :user_id, :sku, :quantity, images: [])
+      :name, :price, :description, :user_id, :sku, :quantity, my_images: [])
   end
 
   def set_product
