@@ -7,4 +7,6 @@ class AttributeValue < ApplicationRecord
 
   has_many :attribute_values_products
   has_many :products, through: :attribute_values_products
+
+  scope :active, -> { where(status: true) }
 end

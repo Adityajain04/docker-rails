@@ -30,7 +30,15 @@ Rails.application.routes.draw do
       end
     end
     resources :attributes, only: %i[index new create edit update destroy] do
+      member do
+        put '/change_status', to: 'attributes#change_status'
+      end
       resources :attribute_values, only: %i[index new create edit update destroy]
+    end
+    resources :attribute_values, only: [] do
+      member do
+        put '/change_status', to: 'attribute_values#change_status'
+      end
     end
   end
 end

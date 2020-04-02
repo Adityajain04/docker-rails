@@ -28,7 +28,9 @@
           <td><%= attribute.name %></td>
           <td><%= attribute.code %></td>
           <td><%= attribute.user.full_name %></td>
-          <td><%= attribute.status %></td>
+          <td>
+            <%= link_to attribute.status ? 'Deactivate' : 'Activate', change_status_admin_attribute_path(attribute.id), class: 'btn btn-secondary', method: :put %>
+          </td>
           <td>
             <%= link_to admin_attribute_attribute_values_path(attribute.id), class: 'btn btn-warning' do %>
               <i class="fas fa-list"></i>  <span>Values</span>

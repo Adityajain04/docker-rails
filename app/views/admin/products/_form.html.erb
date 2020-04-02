@@ -74,10 +74,10 @@
       <% end %>
       <%= fields_for :attribute_values do |a| %>
         <div class="form-group">
-          <% Attribute.all.each_with_index do |attribute, i| %>
+          <% Attribute.active.each_with_index do |attribute, i| %>
             <%= a.label "#{attribute.name}" %>
             <br />
-            <% attribute.attribute_values.each_with_index do |at_v, j| %>
+            <% attribute.attribute_values.active.each_with_index do |at_v, j| %>
               <%= check_box_tag "attribute_value_id[#{i}_#{j}]", at_v.id, @product.attribute_values.include?(at_v) %>
               <%= a.label "#{at_v.name}" %>
             <% end %>

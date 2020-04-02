@@ -2,7 +2,7 @@
 
 # Admin::AttributesController
 class Admin::AttributesController < Admin::AdminController
-  before_action :set_attribute, only: %i[edit update destroy]
+  before_action :set_attribute, only: %i[edit update destroy change_status]
 
   def index
     @attributes = Attribute.all
@@ -41,6 +41,16 @@ class Admin::AttributesController < Admin::AdminController
       flash[:notice] = 'Product Attribute removed successfully.'
     else
       flash[:alert] = 'Something went wrong.'
+    end
+    redirect_to admin_attributes_path
+  end
+
+  def change_status
+    if @attribute.update(status: !@attribute.status)
+      status = @attribute.status ? 'Activated' : 'Dectivated'
+      flash[:notice] = "Attribute #{status} successfully."
+    else
+      flash[:alert] = @attribute.errors.full_messages.join(', ')
     end
     redirect_to admin_attributes_path
   end
