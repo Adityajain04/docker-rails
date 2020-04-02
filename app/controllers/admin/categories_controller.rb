@@ -2,7 +2,7 @@
 
 # Admin::CategoriesController
 class Admin::CategoriesController < Admin::AdminController
-  before_action :set_category, only: %i[edit update destroy]
+  before_action :set_category, only: %i[edit update destroy change_status]
 
   def index
     @categories = Category.all
@@ -41,6 +41,16 @@ class Admin::CategoriesController < Admin::AdminController
       flash[:notice] = 'Product Category removed successfully.'
     else
       flash[:alert] = 'Something went wrong.'
+    end
+    redirect_to admin_categories_path
+  end
+
+  def change_status
+    if @category.update(status: !@category.status)
+      status = @category.status ? 'Activated' : 'Dectivated'
+      flash[:notice] = "Category #{status} successfully."
+    else
+      flash[:alert] = @category.errors.full_messages.join(', ')
     end
     redirect_to admin_categories_path
   end

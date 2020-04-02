@@ -56,7 +56,7 @@
         <div class="form-group">
           <%= c.label 'Category' %>
           <br />
-          <% Category.all.each_with_index do |category, i| %>
+          <% Category.active.each_with_index do |category, i| %>
             <%= check_box_tag "category_id[#{i}]", category.id, @product.categories.include?(category) %>
             <%= c.label "#{category.name}" %>
           <% end %>

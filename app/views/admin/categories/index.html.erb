@@ -28,7 +28,9 @@
           <td><%= category.name %></td>
           <td><%= category.code %></td>
           <td><%= category.user.full_name %></td>
-          <td><%= category.status %></td>
+          <td>
+            <%= link_to category.status ? 'Deactivate' : 'Activate', change_status_admin_category_path(category.id), class: 'btn btn-secondary', method: :put %>
+          </td>
           <td>
             <%= link_to  edit_admin_category_path(category.id), class: 'btn btn-info' do %>
               <i class="fas fa-edit"></i>
