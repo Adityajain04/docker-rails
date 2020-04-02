@@ -44,7 +44,7 @@
         <div class="form-group">
           <%= b.label 'Brand' %>
           <br />
-          <% Brand.all.each_with_index do |brand, i| %>
+          <% Brand.active.each_with_index do |brand, i| %>
             <%= check_box_tag "brand_id[#{i}]", brand.id, @product.brands.include?(brand) %>
             <%= b.label "#{brand.name}" %>
           <% end %>

@@ -2,7 +2,7 @@
 
 # Admin::BrandsController
 class Admin::BrandsController < Admin::AdminController
-  before_action :set_brand, only: %i[edit update destroy]
+  before_action :set_brand, only: %i[edit update destroy change_status]
 
   def index
     @brands = Brand.all
@@ -41,6 +41,16 @@ class Admin::BrandsController < Admin::AdminController
       flash[:notice] = 'Product Brand removed successfully.'
     else
       flash[:alert] = 'Something went wrong.'
+    end
+    redirect_to admin_brands_path
+  end
+
+  def change_status
+    if @brand.update(status: !@brand.status)
+      status = @brand.status ? 'Activated' : 'Dectivated'
+      flash[:notice] = "Brand #{status} successfully."
+    else
+      flash[:alert] = @brand.errors.full_messages.join(', ')
     end
     redirect_to admin_brands_path
   end

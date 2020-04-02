@@ -8,10 +8,15 @@ Rails.application.routes.draw do
     get '/normal_users', to: 'users#normal_users'
     get '/admin_users', to: 'users#admin_users'
     resources :users, only: %i[edit update]
-    resources :roles, :categories, :brands, :stores, only: %i[index new create edit update destroy]
+    resources :roles, :categories, :stores, only: %i[index new create edit update destroy]
     resources :categories, only: %i[index new create edit update destroy] do
       member do
         put '/change_status', to: 'categories#change_status'
+      end
+    end
+    resources :brands, only: %i[index new create edit update destroy] do
+      member do
+        put '/change_status', to: 'brands#change_status'
       end
     end
     resources :products, only: %i[index new create edit update destroy] do
