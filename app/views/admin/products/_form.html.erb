@@ -66,7 +66,7 @@
         <div class="form-group">
           <%= s.label 'Store' %>
           <br />
-          <% Store.all.each_with_index do |store, i| %>
+          <% Store.active.each_with_index do |store, i| %>
             <%= check_box_tag "store_id[#{i}]", store.id, @product.stores.include?(store) %>
             <%= s.label "#{store.name}" %>
           <% end %>

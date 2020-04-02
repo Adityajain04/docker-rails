@@ -2,7 +2,7 @@
 
 # Admin::StoresController
 class Admin::StoresController < Admin::AdminController
-  before_action :set_store, only: %i[edit update destroy]
+  before_action :set_store, only: %i[edit update destroy change_status]
 
   def index
     @stores = Store.all
@@ -41,6 +41,16 @@ class Admin::StoresController < Admin::AdminController
       flash[:notice] = 'Product Store removed successfully.'
     else
       flash[:alert] = 'Something went wrong.'
+    end
+    redirect_to admin_stores_path
+  end
+
+  def change_status
+    if @store.update(status: !@store.status)
+      status = @store.status ? 'Activated' : 'Dectivated'
+      flash[:notice] = "Store #{status} successfully."
+    else
+      flash[:alert] = @store.errors.full_messages.join(', ')
     end
     redirect_to admin_stores_path
   end

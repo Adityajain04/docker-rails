@@ -6,4 +6,6 @@ class Store < ApplicationRecord
 
   has_many :products_stores
   has_many :products, through: :products_stores
+
+  scope :active, -> { where(status: true) }
 end
