@@ -23,4 +23,8 @@ module ApplicationHelper
     end
     nav_class
   end
+
+  def total_quote_price(quote)
+    quote.items.map{ |it| it.quantity.to_i*it.product.price}.sum
+  end
 end

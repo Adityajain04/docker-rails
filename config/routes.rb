@@ -42,4 +42,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :quotes, only: %i[index new create edit update destroy] do
+    collection do
+      get '/select_price', to: 'quotes#select_price'
+    end
+  end
 end

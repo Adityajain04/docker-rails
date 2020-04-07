@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>
+      Add Quote
+    </h2>
+    <%= form_with model: @quote do |f| %>
+      <div id="items">
+        
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+                      <div class="panel-heading d-flex" style="justify-content: space-between;">
+                        <h3>Items</h3>
+                        <%= link_to 'Add Items', 'javascript:void(0);', class: 'btn btn-info', id: 'add_product', remote: true, style: 'float: right;' %>
+                      </div>
+                      <div class="panel-body">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                    <th>Product</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Total</th>
+                                    <th></th>
+                                  </tr>
+                              </thead>
+                              <tbody id="appended_product">
+                                <%= f.fields_for :items  do |it| %>
+                                  <%= render 'item_fields', f: it %>
+                                <% end %>
+                              </tbody>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td class="text-right"><h5>Total</h5></td>
+                                  <td class="text-center"><h5><strong id="sum">$ <%= total_quote_price(f.object) %></strong></h5></td>
+                                  <td></td>
+                                </tr>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6 d-flex">
+              <%= f.submit 'Submit', class: 'btn btn-primary' %>
+          </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var count = 1;
+  $('#add_product').click(function(){
+    $("#appended_product").append('<tr id="product_'+count+'"><td class="col-md-5"><div class="form-group"><select class="form-control select_product" name="quote[items_attributes]['+count+'][product_id]" id="quote_items_attributes_'+count+'_product_id" onchange="view_price(this);"><option value="">--Select Product--</option><option value="1">Tshirt</option><option value="2">Trimer</option><option value="4">Shorts</option></select></div></td><td class="col-md-2" style="text-align: center"><div class="form-group"><input class="form-control" type="text" name="quote[items_attributes]['+count+'][quantity]" id="quote_items_attributes_'+count+'_quantity" onkeyup="change_price(this)"></div></td><td class="col-md-1 text-center"><strong>X</strong></td><td class="col-md-1 text-center price_'+count+'"><strong>$ 0.0</strong></td><td class="col-md-1 text-center"><strong>=</strong></td><td class="col-md-3 text-center total total_price_'+count+'"><strong>$ 0.0</strong></td><td class="col-sm-1 col-md-1"><button name="button" type="submit" class="btn btn-danger" onClick="remove_product('+count+')">Remove</button></td></tr>')
+    count = count + 1;
+  })
+  function remove_product(tr_count){
+    $('tr#product_'+tr_count).remove();
+    calc_total();
+  }
+  function view_price(m){
+    var id = $(m).val();
+    var c = $(m).attr('id').split('_')[3];
+    $.ajax({
+      url: "/quotes/select_price",
+      method: "GET",
+      data: { id: id },
+      success: function(data){
+        $('input#quote_items_attributes_'+c+'_quantity').val('1');
+        $('td.price_'+c).html('<strong>$ '+data.price+'</strong>');
+        $('td.total_price_'+c).html('<strong>$ '+data.price+'</strong>');
+        calc_total();
+      }
+    });
+  }
+  function change_price(m){
+    var quantity = $(m).val();
+    var c = $(m).attr('id').split('_')[3];
+    var price = $('td.price_'+c+' strong').html();
+    var total = parseFloat(price.split(' ')[1]) * quantity
+    $('td.total_price_'+c).html('<strong>$ '+total+'</strong>');
+    calc_total();
+  }
+  function calc_total(){
+    var sum = 0;
+    $("td.total").each(function(){
+      sum += parseFloat($(this).text().split(' ')[1]);
+    });
+    $('#sum').text('$ '+sum);
+  }
+
+</script>

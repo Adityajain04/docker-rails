@@ -10,6 +10,11 @@
         <i class="fa fa-home" aria-hidden="true"></i>  <span>Home</span>
       <% end %>
     </li>
+    <li>
+      <%= link_to quotes_path do %>
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>  <span>My Quotes</span>
+      <% end %>
+    </li>
     <% if user_signed_in? %>
       <% if current_user.has_role? :admin %>
         <li class=<%= active_nav([['users', 'admin_users'], ['users', 'normal_users']]) %>>
