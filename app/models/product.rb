@@ -13,7 +13,8 @@ class Product < ApplicationRecord
   has_many :attribute_values_products
   has_many :attribute_values, through: :attribute_values_products
   has_many :attries, class_name: 'Attribute', through: :attribute_values
-
+  has_many :items, dependent: :destroy
+  
   has_many_attached :images
   attr_accessor :my_images
 
