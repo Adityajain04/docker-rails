@@ -1,1 +1,17 @@
-<h1>Home Page</h1>
+<div class="row product-grid">
+  <% @products.each do |product| %>
+    <div class="col-md-4 col-sm-4 grid-item ml-3">
+      <% if product.images.attached? %>
+        <%= image_tag product.images.first, width: '100px', height: '100px' %>
+      <% end %>
+      <h1 class="product-title"><%= product.name %></h1>
+      <h3 class="product-price">$ <%= product.price %></h3>
+      <div class="quantity-input">
+        <input class="minus btn" type="button" value="-">
+        <input id="text_7_keto_dhea" value="1" class="input-text qty text" size="4"/>
+        <input class="plus btn" type="button" value="+">
+      </div>
+      <button class="btn btn-success add-to-cart-button" rel="7_keto_dhea" product="7-Keto DHEA 100 mg" sel="12.99"><span class="glyphicon glyphicon-ok"></span> Add to Cart</button>
+    </div>
+  <% end %>
+</div>

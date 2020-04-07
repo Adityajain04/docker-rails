@@ -4,12 +4,13 @@
 
 <ul class="list-unstyled components">
     <!-- <p>Dummy Heading</p> -->
+    
+    <li class=<%= active_nav([['home', 'index']]) %>>
+      <%= link_to root_path do %>
+        <i class="fa fa-home" aria-hidden="true"></i>  <span>Home</span>
+      <% end %>
+    </li>
     <% if user_signed_in? %>
-      <li class=<%= active_nav([['home', 'index']]) %>>
-        <%= link_to root_path do %>
-          <i class="fa fa-home" aria-hidden="true"></i>  <span>Home</span>
-        <% end %>
-      </li>
       <% if current_user.has_role? :admin %>
         <li class=<%= active_nav([['users', 'admin_users'], ['users', 'normal_users']]) %>>
           <%= link_to '#homeSubmenu', data: {toggle: "collapse"}, aria: {expanded: "false"}, class: "dropdown-toggle" do %>
