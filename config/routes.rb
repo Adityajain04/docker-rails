@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
     resources :products, only: %i[index new create edit update destroy] do
       member do
+        put '/change_availability', to: 'products#change_availability'
         delete '/remove_attachment/:attachment_id', to: 'products#remove_attachment'
       end
     end

@@ -2,7 +2,7 @@
 
 # Admin::ProductsController
 class Admin::ProductsController < Admin::AdminController
-  before_action :set_product, only: %i[edit update destroy remove_attachment]
+  before_action :set_product, only: %i[edit update destroy remove_attachment change_availability]
 
   def index
     @products = Product.all
@@ -65,6 +65,17 @@ class Admin::ProductsController < Admin::AdminController
     @image = ActiveStorage::Attachment.find(params[:attachment_id])
     @image.purge
     redirect_to edit_admin_product_url(@product.id)
+  end
+
+  def change_availability
+    if @product.update(availability: !@product.availability)
+      availability = @product.reload.availability ? 'available' : 'not available'
+      flash[:notice] = "Product is #{availability} now."
+      redirect_to admin_products_path
+    else
+      flash[:alert] = @product.errors.full_messages.join(', ')
+      redirect_to admin_products_path
+    end
   end
 
   private

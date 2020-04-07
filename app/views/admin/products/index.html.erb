@@ -20,6 +20,7 @@
         <th scope="col">Price</th>
         <th scope="col">Quantity</th>
         <th scope="col">Created By</th>
+        <th scope="col">Availability</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -31,6 +32,9 @@
           <td>$ <%= product.price %></td>
           <td><%= product.quantity %></td>
           <td><%= product.user.full_name %></td>
+          <th scope="col">
+            <%= link_to (product.availability ? 'Make It Not Available' : 'Make It Available'), change_availability_admin_product_path(product.id), method: :put, class: 'btn btn-secondary' %>
+          </th>
           <td>
             <%= link_to  edit_admin_product_path(product.id), class: 'btn btn-info' do %>
               <i class="fas fa-edit"></i>
