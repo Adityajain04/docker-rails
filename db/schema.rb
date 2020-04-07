@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_051325) do
+ActiveRecord::Schema.define(version: 2020_04_07_084229) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -128,6 +128,15 @@ ActiveRecord::Schema.define(version: 2020_04_02_051325) do
     t.index ["store_id"], name: "index_products_stores_on_store_id"
   end
 
+  create_table "quotes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "status"
+    t.text "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_quotes_on_user_id"
+  end
+
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -197,5 +206,6 @@ ActiveRecord::Schema.define(version: 2020_04_02_051325) do
   add_foreign_key "categories_products", "products"
   add_foreign_key "products_stores", "products"
   add_foreign_key "products_stores", "stores"
+  add_foreign_key "quotes", "users"
   add_foreign_key "stores", "users"
 end

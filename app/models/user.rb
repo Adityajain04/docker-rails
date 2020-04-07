@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :products, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :quotes, dependent: :destroy
 
   validates_presence_of :email
   validates_uniqueness_of :email
