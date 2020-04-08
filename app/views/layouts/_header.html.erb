@@ -71,6 +71,11 @@
                 </li>
             </ul>
         </li>
+        <li class=<%= active_nav([['quotes', 'index']]) %>>
+          <%= link_to  admin_quotes_path do %>
+            <i class="fas fa-chalkboard-teacher"></i>  <span>Quotes Request</span>
+          <% end %>
+        </li>
       <% end %>
       <li class=<%= active_nav([['sessions', 'destroy']]) %>>
         <%= link_to destroy_user_session_path ,method: :delete do %>

@@ -41,6 +41,12 @@ Rails.application.routes.draw do
         put '/change_status', to: 'attribute_values#change_status'
       end
     end
+    resources :quotes, only: %i[index show] do
+      member do
+        put '/reject', to: 'quotes#reject'
+        put '/accept', to: 'quotes#accept'
+      end
+    end
   end
 
   resources :quotes, only: %i[index new create edit update destroy] do

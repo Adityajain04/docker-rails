@@ -14,6 +14,7 @@
                         <%= link_to 'Add Items', 'javascript:void(0);', class: 'btn btn-info', id: 'add_product', remote: true, style: 'float: right;' %>
                       </div>
                       <div class="panel-body">
+                        <div class="table-responsive">
                           <table class="table table-striped">
                               <thead>
                                   <tr>
@@ -32,7 +33,7 @@
                                 <% end %>
                               </tbody>
                                 <tr>
-                                  <td></td>
+                                  <td><%= f.submit 'Submit', class: 'btn btn-primary' %></td>
                                   <td></td>
                                   <td></td>
                                   <td></td>
@@ -41,6 +42,7 @@
                                   <td></td>
                                 </tr>
                           </table>
+                        </div>
                       </div>
                   </div>
               </div>
@@ -48,7 +50,7 @@
       </div>
       <div class="row">
           <div class="col-md-6 d-flex">
-              <%= f.submit 'Submit', class: 'btn btn-primary' %>
+              
           </div>
       </div>
     <% end %>
@@ -73,9 +75,15 @@
       method: "GET",
       data: { id: id },
       success: function(data){
-        $('input#quote_items_attributes_'+c+'_quantity').val('1');
+        debugger
+        var qu = $('input#quote_items_attributes_'+c+'_quantity').val()
+        if(qu == ''){
+          $('input#quote_items_attributes_'+c+'_quantity').val('1');
+          $('td.total_price_'+c).html('<strong>$ '+data.price+'</strong>');
+        }else{
+          $('td.total_price_'+c).html('<strong>$ '+(data.price * qu)+'</strong>');
+        }
         $('td.price_'+c).html('<strong>$ '+data.price+'</strong>');
-        $('td.total_price_'+c).html('<strong>$ '+data.price+'</strong>');
         calc_total();
       }
     });

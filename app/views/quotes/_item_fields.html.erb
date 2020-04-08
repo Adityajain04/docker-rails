@@ -1,4 +1,4 @@
-<tr id="product_0">
+<tr id=<%= "product_#{f.index}" %>>
   <td class="col-md-5">
     <div class="form-group">
       <%= f.select :product_id, Product.available.collect {|p| [ p.name, p.id ] }, { include_blank: '--Select Product--' }, { class: 'form-control select_product', onchange: 'view_price(this)' } %>
@@ -10,9 +10,9 @@
     </div>
   </td>
   <td class="col-md-1 text-center"><strong>X</strong></td>
-  <td class="col-md-1 text-center price_0"><strong>$ <%= f.object.product.price rescue '0.00' %></strong></td>
+  <td class='<%= "col-md-1 text-center price_#{f.index}" %>'><strong>$ <%= f.object.product.price rescue '0.00' %></strong></td>
   <td class="col-md-1 text-center"><strong>=</strong></td>
-  <td class="col-md-3 text-center total total_price_0"><strong>$ <%= f.object.product.price*f.object.quantity.to_i rescue '0.00' %></strong></td>
+  <td class='<%= "col-md-3 text-center total total_price_#{f.index}" %>'><strong>$ <%= f.object.product.price*f.object.quantity.to_i rescue '0.00' %></strong></td>
   <td class="col-sm-1 col-md-1">
     <%= button_tag 'Remove', class: 'btn btn-danger', onclick: "remove_product('0')"%>
   </td>
