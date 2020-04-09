@@ -9,19 +9,14 @@ class CheckoutService
   end
 
   def checkout
-    debugger
     ActiveRecord::Base.transaction do
       update_quote_status
-      add_order
+      true
     end
   end
 
   private
   def update_quote_status
     @quote.update(status: 'checkout')
-  end
-
-  def add_order
-
   end
 end
