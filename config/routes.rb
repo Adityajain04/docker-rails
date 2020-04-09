@@ -53,5 +53,8 @@ Rails.application.routes.draw do
     collection do
       get '/select_price', to: 'quotes#select_price'
     end
+    member do
+      get '/checkout', to: 'quotes#checkout'
+    end
   end
 end

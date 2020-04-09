@@ -26,15 +26,20 @@
       <% @quotes.each do |quote| %>
         <tr>
           <td>$ <%= total_quote_price(quote) %></td>
-          <td><%= quote.status %></td>
+          <td><%= quote.status.titleize %></td>
           <td><%= quote.comment %></td>
-          <td><%= quote.created_at %></td>
+          <td><%= quote.created_at.strftime("%d/%m/%Y %I:%M%p")   %></td>
           <td>
-            <%= link_to  edit_quote_path(quote.id), class: 'btn btn-info' do %>
-              <i class="fas fa-edit"></i>
+            <% unless quote.status == 'accepted' or quote.status == 'checkout' %>
+              <%= link_to  edit_quote_path(quote.id), class: 'btn btn-info' do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+              <%= link_to quote_path(quote.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
             <% end %>
-            <%= link_to quote_path(quote.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' do %>
-              <i class="fas fa-trash"></i>
+            <% if quote.status == 'accepted' %>
+              <%= link_to  'Checkout', checkout_quote_path(quote.id), class: 'btn btn-warning' %>
             <% end %>
           </td>
         </tr>

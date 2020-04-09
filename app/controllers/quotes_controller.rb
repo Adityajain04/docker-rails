@@ -49,6 +49,15 @@ class QuotesController < ApplicationController
     render json: {price: @product.price}
   end
 
+  def checkout
+    if CheckoutService.new(params[:id]).checkout
+      flash[:notice] = 'Order Created.'
+    else
+      flash[:alert] = 'Something went wrong.'
+    end
+    redirect_to quotes_path
+  end
+
   private
   def quote_params
     params.require(:quote).permit(:user_id, :status, :comment, items_attributes: [:product_id, :quote_id, :quantity, :id])
